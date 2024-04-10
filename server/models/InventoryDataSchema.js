@@ -10,7 +10,6 @@ const inventorySchema = new mongoose.Schema({
   },
   SKU: {
     type: String,
-    required: true,
     maxlength:5
   },
   type: {
@@ -20,12 +19,11 @@ const inventorySchema = new mongoose.Schema({
   },
   primaryStatus: {
     type: String,
-    required: true,
     Enumerator:["Available","Not Available"]
   },
   primaryLocation: {
     type: String,
-    required: true
+    
   },
   attributes: {
     VIN: {
