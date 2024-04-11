@@ -1,25 +1,22 @@
-
 import mongoose from 'mongoose';
 
 const inventorySchema = new mongoose.Schema({
   Status:{
      type: String,
-     Enumerator:["Created","Procured","Sold"],
      default:"Created"
      
   },
   SKU: {
     type: String,
-    maxlength:5
+    
   },
   type: {
     type: String,
-    required: true,
-    Enumerator:["Car","Bike","Truck"]
+    
   },
   primaryStatus: {
     type: String,
-    Enumerator:["Available","Not Available"]
+    
   },
   primaryLocation: {
     type: String,
@@ -33,27 +30,12 @@ const inventorySchema = new mongoose.Schema({
     make: String,
     model: String,
     trim: String,
-    year: {
-        type: Number,
-        required: true,
-        validate(value){
-            if(value<2020 && value>2025){
-                throw new Error("Year should be greater than 2020 and less than 2025");
-            }
-        }
-    }
-    
-
+    year: Number
   },
   pricing: {
     cost: {
       type: Number,
-      required: true,
-      validate(value){
-          if(value<0){
-              throw new Error("Cost should be greater than 0");
-          }
-      }
+      required: true
     },
     sellingPrice: {
       type: Number,
