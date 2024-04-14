@@ -1,9 +1,9 @@
 import sinon from 'sinon';
 import Inventory from '../models/InventoryDataSchema.js';
-import Createinventory from '../controllers/CreateInventory.js';
+import ManageInventory from '../controllers/ManageInventory.js';
 
 
-describe('Createinventory', function() {
+describe('ManageInventory', function() {
   describe('createinventory', function() {
     it('should save new inventory', async function() {
       const mockInventory = sinon.mock(Inventory.prototype);
@@ -38,11 +38,35 @@ describe('Createinventory', function() {
         json: function() {}
       };
       //Act
-      await Createinventory.createinventory(req, res);
+      await ManageInventory.createinventory(req, res);
       //Assert
       mockInventory.verify();
       mockInventory.restore();
       
+    });
+  });
+});
+
+describe('ManageInventory', function() {
+  describe('deleteInventory', function() {
+    it('should delete inventory', async function() {
+      const mockInventory = sinon.mock(Inventory);
+      mockInventory.expects('findByIdAndDelete').once();
+
+      const req = {
+        params: {
+          id: '661770ea097c95f03296f907'
+        }
+      };
+
+      const res = {
+        json: function() {}
+      };
+
+      await ManageInventory.deleteinventory(req, res);
+
+      mockInventory.verify();
+      mockInventory.restore();
     });
   });
 });
