@@ -43,7 +43,7 @@ class ManageInventory {
         const {id} = req.params;
         try {
             await Inventory.findByIdAndDelete(id);
-            res.status(200).json({message:"Inventory deleted successfully"});
+            res.json({message:"Inventory Deleted Successfully"});
         } catch (error) {
             res.status(404).json({message:error.message});
         }
