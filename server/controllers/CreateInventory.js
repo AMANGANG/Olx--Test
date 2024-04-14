@@ -29,5 +29,15 @@ class Createinventory {
             res.status(404).json({message:error.message});
         }
     }
+    static updateinventory=async (req, res) =>{
+        const {id} = req.params;
+        const inventorydata= new InventoryData(req.body);
+        try {
+            await Inventory.findByIdAndUpdate(id, inventorydata);
+            res.status(200).json({message:"Inventory updated successfully"});
+        } catch (error) {
+            res.status(404).json({message:error.message});
+        }
+    }
 }
 export default Createinventory;
