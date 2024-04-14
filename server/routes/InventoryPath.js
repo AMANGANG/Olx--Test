@@ -5,4 +5,5 @@ const router = express.Router();
 router.post('/inventory', Createinventory.createinventory);
 router.get('/inventory', Createinventory.getinventory);
 router.get('/inventory/:id', Createinventory.getinventorybyid);
+router.put('/inventory/:id', Createinventory.updateinventory);
 export default router;
