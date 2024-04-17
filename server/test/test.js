@@ -6,9 +6,10 @@ import ManageInventory from '../controllers/ManageInventory.js';
 describe('ManageInventory', function() {
   describe('createinventory', function() {
     it('should save new inventory', async function() {
+      const manageinventory = new ManageInventory();
       const mockInventory = sinon.mock(Inventory.prototype);
       mockInventory.expects('save').once();
-      //Arrange
+      
       const req = {
         body: {
           status: 'Created',
@@ -37,9 +38,9 @@ describe('ManageInventory', function() {
         },
         json: function() {}
       };
-      //Act
-      await ManageInventory.createinventory(req, res);
-      //Assert
+      
+      await manageinventory.createinventory(req, res);
+      
       mockInventory.verify();
       mockInventory.restore();
       
@@ -48,23 +49,22 @@ describe('ManageInventory', function() {
 });
 
 describe('ManageInventory', function() {
-  describe('deleteInventory', function() {
-    it('should delete inventory', async function() {
+  describe('getinventories', function() {
+    it('should get all inventories', async function() {
+      const manageinventory = new ManageInventory();
       const mockInventory = sinon.mock(Inventory);
-      mockInventory.expects('findByIdAndDelete').once();
-
-      const req = {
-        params: {
-          id: '661770ea097c95f03296f907'
-        }
-      };
-
+      mockInventory.expects('find').once().resolves([]);
+      
+      const req = {};
       const res = {
+        status: function() {
+          return this;
+        },
         json: function() {}
       };
-
-      await ManageInventory.deleteinventory(req, res);
-
+      
+      await manageinventory.getinventories(req, res);
+      
       mockInventory.verify();
       mockInventory.restore();
     });
