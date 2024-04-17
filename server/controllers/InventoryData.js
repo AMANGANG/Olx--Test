@@ -1,7 +1,7 @@
-
+import { v4 as uuidv4 } from 'uuid';
 class InventoryData {
-    constructor({ status,sku, type,primarystatus,primarylocation, attributes, pricing, metadata }) {
-        this.sku = sku;
+    constructor({ status, type, primarystatus, primarylocation, attributes, pricing, metadata, SKU }) {
+        this.SKU = SKU || uuidv4(); 
         this.type = type;
         this.status = status;
         this.primarystatus = primarystatus;
