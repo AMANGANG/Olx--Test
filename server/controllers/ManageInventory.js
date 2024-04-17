@@ -2,7 +2,7 @@ import InventoryData from "./InventoryData.js";
 import Inventory from "../models/InventoryDataSchema.js";
 
 class ManageInventory {
-    static createinventory=async (req, res) =>{
+    async createinventory(req, res) {
         const inventorydata= new InventoryData(req.body);
         const newinventory = new Inventory(inventorydata);
         try {
@@ -12,40 +12,40 @@ class ManageInventory {
             res.status(409).json({message:error.message});
         }
     }
-    static getinventory=async (req, res) =>{
+    async getinventories (req, res) {
         try {
-            const inventory = await Inventory.find();
+            const inventory = await Inventory.find().select('-_id');
             res.status(200).json(inventory);
         } catch (error) {
             res.status(404).json({message:error.message});
         }
     }
-    static getinventorybyid=async (req, res) =>{
-        const {id} = req.params;
+    
+    async getinventorybysku (req, res)  {
+        const { SKU } = req.params;
         try {
-            const inventory = await Inventory.findById(id);
+            const inventory = await Inventory.findOne({ SKU: SKU});
+            if (!inventory) {
+                return res.status(404).json({ message: 'Inventory not found' });
+            }
             res.status(200).json(inventory);
         } catch (error) {
-            res.status(404).json({message:error.message});
+            res.status(500).json({ message: error.message });
         }
     }
-    static updateinventory=async (req, res) =>{
-        const {id} = req.params;
-        const inventorydata= new InventoryData(req.body);
+    
+   
+    async deleteinventorybysku  (req, res) {
+        const { SKU } = req.params;
         try {
-            await Inventory.findByIdAndUpdate(id, inventorydata);
-            res.status(200).json({message:"Inventory updated successfully"});
+            const inventory = await Inventory.findOne({ SKU: SKU });
+            if (!inventory) {
+                return res.status(404).json({ message: 'Inventory not found' });
+            }
+            await Inventory.findByIdAndDelete(inventory._id);
+            res.json({ message: 'Inventory deleted successfully' });
         } catch (error) {
-            res.status(404).json({message:error.message});
-        }
-    }
-    static deleteinventory=async (req, res) =>{
-        const {id} = req.params;
-        try {
-            await Inventory.findByIdAndDelete(id);
-            res.json({message:"Inventory Deleted Successfully"});
-        } catch (error) {
-            res.status(404).json({message:error.message});
+            res.status(500).json({ message: error.message });
         }
     }
 }
