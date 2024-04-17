@@ -4,23 +4,18 @@ const inventorySchema = new mongoose.Schema({
   Status:{
      type: String,
      default:"Created"
-     
   },
   SKU: {
     type: String,
-    
   },
   type: {
     type: String,
-    
   },
   primaryStatus: {
     type: String,
-    
   },
   primaryLocation: {
     type: String,
-    
   },
   attributes: {
     VIN: {
