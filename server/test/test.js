@@ -10,34 +10,10 @@ describe('ManageInventory', function() {
       const mockInventory = sinon.mock(Inventory.prototype);
       mockInventory.expects('save').once();
       
-      const req = {
-        body: {
-          status: 'Created',
-          sku: '12345',
-          type: 'Car',
-          primarystatus: 'Available',
-          primarylocation: 'Warehouse A',
-          attributes: {
-            VIN: '1HGCM82633A123456',
-            make: 'Honda',
-            model: 'Accord',
-            trim: 'EX',
-            year: 2023
-          },
-          pricing: {
-            cost: 20000,
-            sellingPrice: 25000
-          },
-          metadata: {}
-        }
-      };
+      const req = Requestdata();
 
-      const res = {
-        status: function() {
-          return this;
-        },
-        json: function() {}
-      };
+      const res = Responsedata();
+      
       
       await manageinventory.createinventory(req, res);
       
@@ -56,12 +32,7 @@ describe('ManageInventory', function() {
       mockInventory.expects('find').once().resolves([]);
       
       const req = {};
-      const res = {
-        status: function() {
-          return this;
-        },
-        json: function() {}
-      };
+      const res = Responsedata();
       
       await manageinventory.getinventories(req, res);
       
@@ -70,3 +41,38 @@ describe('ManageInventory', function() {
     });
   });
 });
+function Responsedata() {
+  return {
+    status: function () {
+      return this;
+    },
+    json: function () { }
+  };
+}
+
+function Requestdata() {
+  const newLocal = {
+    body: {
+      status: 'Created',
+      sku: '12345',
+      type: 'Car',
+      primarystatus: 'Available',
+      primarylocation: 'Warehouse A',
+      attributes: {
+        VIN: '1HGCM82633A123456',
+        make: 'Honda',
+        model: 'Accord',
+        trim: 'EX',
+        year: 2023
+      },
+      pricing: {
+        cost: 20000,
+        sellingPrice: 25000
+      },
+      metadata: {}
+    }
+  };
+  const req = newLocal;
+  return req;
+}
+
